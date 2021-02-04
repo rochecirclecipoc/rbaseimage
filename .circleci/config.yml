@@ -1,13 +1,16 @@
 version: 2.1
 
 jobs:
-  check-and-build-only:
+  build-docker-image-only:
     executor: docker/machine
     steps:
       - checkout
       - docker/check
       - docker/build:
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      - docker/publish:
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          update-description: true
 
 orbs:
   docker: circleci/docker@1.5.0
