@@ -15,4 +15,4 @@ orbs:
 workflows:
   build-docker-image-only:
     jobs:
-      - check-and-build-only
+      - build-docker-image-only
