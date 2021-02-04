@@ -5,4 +5,9 @@ workflows:
   build-and-publish-docker-image:
     jobs:
       - docker/publish:
+          cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
+          filters:
+            branches:
+              only: master
