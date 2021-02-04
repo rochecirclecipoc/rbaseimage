@@ -1,6 +1,20 @@
 version: 2.1
 orbs:
   docker: circleci/docker@1.5.0
+
+jobs:
+  smoke_test:
+    executor: docker/machine
+    steps:
+      - run:
+          name: "Test docker"
+          command: |
+            docker run \
+              --rm \
+              -it \
+              --entrypoint "" \
+              ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:latest \
+              R -e 'a = data.frame(installed.packages()); a[c("Package", "LibPath")]'
 workflows:
   build-and-publish-docker-image:
     jobs:
@@ -8,6 +22,10 @@ workflows:
           cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: latest
+          filters:
+            branches:
+              only: master
+      - smoke_test:
           filters:
             branches:
               only: master
