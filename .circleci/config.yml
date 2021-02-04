@@ -26,6 +26,8 @@ workflows:
             branches:
               only: main
       - smoke_test:
+          requires:
+            - docker/publish
           filters:
             branches:
               only: main
