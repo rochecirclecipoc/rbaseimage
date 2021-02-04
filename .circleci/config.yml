@@ -24,8 +24,8 @@ workflows:
           tag: latest
           filters:
             branches:
-              only: master
+              only: main
       - smoke_test:
           filters:
             branches:
-              only: master
+              only: main
